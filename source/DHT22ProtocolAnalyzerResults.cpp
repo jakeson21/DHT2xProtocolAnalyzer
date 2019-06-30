@@ -76,11 +76,37 @@ std::string DHT22ProtocolAnalyzerResults::GetLongDecodedString(U64 frame_index, 
     {
     case DHT2xFrameType::RELATIVEHUMIDITY:
         output << "Relative Humidity ";
-        value << " " << frame.mData1 / 10.0 << " %";
+
+        if(mSettings->mDHTxType == DHTxTYPE::DHT11)
+        {
+            value << " " << ((frame.mData1 >> 8) & (0xFF)) << "." << ((frame.mData1 >> 0) & (0xFF)) << " %";
+        }
+        else if (mSettings->mDHTxType == DHTxTYPE::DHT22)
+        {
+            value << " " << frame.mData1 / 10.0 << " %";
+        }
+        else
+        {
+
+        }
+
         break;
     case DHT2xFrameType::TEMPERATURE:
         output << "Temperature ";
-        value << " " << frame.mData1 / 10.0 << " C ";
+
+        if(mSettings->mDHTxType == DHTxTYPE::DHT11)
+        {
+            value << " " << ((frame.mData1 >> 8) & (0xFF))  << "." << ((frame.mData1 >> 0) & (0xFF)) << " C ";
+        }
+        else if (mSettings->mDHTxType == DHTxTYPE::DHT22)
+        {
+            value << " " << frame.mData1 / 10.0 << " C ";
+        }
+        else
+        {
+
+        }
+
         break;
     case DHT2xFrameType::CHECKSUM:
         output << "Checksum ";
