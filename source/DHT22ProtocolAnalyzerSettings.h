@@ -4,6 +4,12 @@
 #include <AnalyzerSettings.h>
 #include <AnalyzerTypes.h>
 
+enum DHTxTYPE
+{
+	DHT11,
+	DHT22
+};
+
 class DHT22ProtocolAnalyzerSettings : public AnalyzerSettings
 {
 public:
@@ -19,11 +25,14 @@ public:
 	Channel mInputChannel;
 	U32 mPulseWidthZero_us;
 	U32 mPulseWidthOne_us;
+	DHTxTYPE mDHTxType;
 
 protected:
 	std::auto_ptr< AnalyzerSettingInterfaceChannel >	mInputChannelInterface;
 	std::auto_ptr< AnalyzerSettingInterfaceInteger >	mLongPulseInterface;
 	std::auto_ptr< AnalyzerSettingInterfaceInteger >	mShortPulseInterface;
+	std::auto_ptr< AnalyzerSettingInterfaceNumberList >	mDHTxTypeInterface;
+	
 };
 
 #endif //DHT22PROTOCOL_ANALYZER_SETTINGS
